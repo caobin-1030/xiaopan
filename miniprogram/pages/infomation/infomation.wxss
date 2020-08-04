@@ -1,0 +1,332 @@
+/**index.wxss**/
+
+page {
+  background: #f6f6f6;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: #F9FAFE;
+  font-family: Source Han Sans CN;
+  font-size: 28rpx;
+  overflow: hidden;
+  overflow-y:scroll;
+  position: relative; 
+}
+.container{
+  width: 90%;
+  padding: 0 5%;
+  margin: 0 auto;
+}
+.screen {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 50rpx;
+  line-height: 50rpx;
+  background: #f6f6f6;
+}
+.topnav{
+  position: fixed;
+  top: 0rpx;
+  left: 5%;
+  width: 90%;
+  position: fixed;
+  height: 50rpx;
+  line-height: 50rpx;
+  z-index: 9999;
+
+}
+.screen>text {
+  font-family: SourceHanSansCN;
+  font-size: 26rpx;
+  line-height: 30rpx;
+  text-align: center;
+  letter-spacing: 4.33333rpx;
+  text-transform: uppercase;
+  color: #6C7B8A; 
+}
+.screen>.screen1 {
+  font-family: SourceHanSansCN;
+  font-size: 26rpx;
+  line-height: 30rpx;
+  text-align: center;
+  letter-spacing: 4.33333rpx;
+  text-transform: uppercase;
+  color: #FF6B00;
+}
+.info {
+  background: #FFFFFF;
+  box-shadow: 0px 3rpx 29rpx rgba(59, 74, 116, 0.135473);
+  border-radius: 10rpx 10rpx 0 0; 
+  margin-top: 25rpx;
+  padding: 15rpx 20rpx;
+}
+.infoTitle {
+  font-family: SourceHanSansCN;
+  font-size: 30rpx;
+  line-height: 30rpx;
+  color: #101010;
+  text-overflow: ellipsis;overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.info1 {
+  display: flex;
+  flex-direction: row;
+  margin-top: 15rpx;
+}
+.infoImg {
+  width: 30%;
+  height: 243rpx;
+  background-color: #101010;
+}
+.infoIn {
+  margin-left: 32rpx;
+  width: 70%;
+}
+.press {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.press>view:nth-child(1) {
+  font-family: SourceHanSansCN;
+  font-size: 26rpx;
+  line-height: 23px;
+  color: #3366CC;
+}
+.act {
+  background: #FF6B00 !important;
+}
+.press>view:nth-child(2) {
+  background: #6C7B8A;
+  border-radius: 8rpx 0px 0px 8rpx;
+  color: #fff;
+  margin-right: -20rpx;
+  padding: 5rpx 10rpx;
+}
+.infoIn1>text {
+  font-family: SourceHanSansCN;
+  font-size: 24rpx;
+  line-height: 28rpx;
+  color: #6C7B8A;
+  display: inline-block;
+  margin:10rpx 0;
+}
+.ifjishi{
+  display: flex;
+  flex-direction: row;
+  margin-top:15rpx;
+}
+.alertDialog {
+  /* 对话框：一个圆角矩形和一个小三角形 */
+  width: 86rpx;
+  height: 86rpx;
+  background: linear-gradient(144.07deg, #629FE8 -11.05%, #3366CC 100%);
+  position: relative;
+  font-family: SourceHanSansCN;
+  font-size: 30rpx;
+  line-height: 30rpx;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #FFFFFF;
+  text-shadow: 0px 2rpx 4rpx #3669CE;
+  margin-right: 16rpx;
+}
+.alertDialog:after {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  right: -20rpx;
+  top: 30rpx;
+  border-top: 10rpx solid transparent;
+  border-bottom: 10rpx solid transparent;
+  border-left: 20rpx solid #467DD7; 
+}
+.ifTop {
+  display: flex;
+  flex-direction: row;
+  line-height: 30rpx;
+}
+.ifTop>view:nth-child(1)>text {
+  font-family: SourceHanSansCN;
+  font-size: 20rpx;
+  letter-spacing: 1.2rpx;
+  margin-right: 8rpx;
+}
+.ifTop>view:nth-child(2) {
+  border: 1px solid #FF6B00;
+  font-family: SourceHanSansCN;
+  font-size: 14rpx;
+  color: #FF6B00;
+  padding:0 6rpx;
+}
+.ifBottom>text {
+  display: inline-block;
+  font-family: SourceHanSansCN;
+  font-size: 40rpx;
+  line-height: 47rpx;
+  margin-top: 5rpx;
+  margin-right: 8rpx;
+}
+.fenqu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: #FFFFFF;
+  box-shadow: 0px 3rpx 29rpx rgba(59, 74, 116, 0.135473);
+  border-radius: 0px 0px 10rpx 10rpx;
+  padding: 27rpx 20rpx;
+
+}
+ec-canvas {
+  width: 100%;
+  height: 100%;
+}
+.introduce {
+  width: 90%;
+  background: #FFFFFF;
+  margin:20rpx 5%;
+  overflow: hidden;
+}
+.introduce>view:nth-child(1) {
+  font-family: SourceHanSansCN;
+  font-size: 36rpx;
+  line-height: 33px;
+  color: #6C7B8A;
+}
+.introduce>text {
+  font-family: SourceHanSansCN;
+  font-size: 26rpx;
+  line-height: 200%;
+  color: #000000;
+}
+.fuzhi{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.fuzhi>button:not([size='mini']) {
+  width: 160rpx;
+  min-height: 50rpx;
+  margin:10rpx 10rpx 0rpx 0rpx;
+  color: #3366CC;
+  font-weight: 500;
+  border-radius: 0;
+  background-color: #fff;
+  font-size: 14px;
+  text-align: center;
+  padding: 10rpx 0;
+  border: 1rpx solid #3366CC;
+  cursor: pointer;
+}
+.fuzhi>.button-hover {
+  color: #fff;
+  background-color: #3366CC;
+}
+.neirong{
+  font-family: SourceHanSansCN;
+  font-size: 14px;
+  line-height: 200%;
+  color: #6C7B8A;
+  text-align: center;
+  margin-top: 20rpx;
+}
+.comment{
+  width: 100%;
+  height: 80rpx;
+  position: fixed;
+  bottom: 0;
+  left:0;
+  background-color: #fff;
+}
+.comment>button:not([size='mini']) {
+  width: 70%;
+  border-radius: 10rpx;
+  min-height: 60rpx;
+  margin:10rpx auto;
+  color: #3366CC;
+  font-weight: 500;
+  background-color: #fff;
+  font-size: 14px;
+  text-align: center;
+  padding: 10rpx 0;
+  border: 1rpx solid #3366CC;
+  cursor: pointer;
+}
+.comment>.button-hover {
+  color: #fff;
+  background-color: #3366CC;
+}
+.commtext{
+  width: 90%;
+  margin: 0 auto;
+}
+.commtext>textarea{
+  width: 95%;
+  height: 70px;
+  font-size: 14px;
+  color: #666;
+  border:1px solid #999;
+  border-radius: 10rpx;
+  padding: 8px;
+}
+.commtext>text:nth-child(1){
+  line-height: 24px;
+  font-size: 16px;
+
+}
+.van-popup__close-icon--top-right {
+  top:6px !important;
+  top: var(--popup-close-icon-margin,6px) !important;
+  right: 10px !important;
+  right: var(--popup-close-icon-margin,10px) !important;
+}
+.commtext>view>van-button>button:not([size='mini']) {
+  width: 50px !important;
+  border-radius: 10rpx !important;
+  min-height: 22px !important;
+  margin:10rpx auto !important;
+  font-size: 14px;
+  
+}
+.comment1>view:nth-child(1) {
+  font-family: SourceHanSansCN;
+  font-size: 36rpx;
+  line-height: 33px;
+  color: #6C7B8A;
+}
+.commtext>view{
+  text-align: right;
+}
+.holder{
+  font-size: 14px !important;
+}
+.commlist{
+  display: flex;
+  flex-direction: row;
+  margin: 20rpx;
+} 
+.comment1{
+  width: 90%;
+  margin:30rpx auto 100rpx;
+}
+.commlist>image{
+  width: 70rpx;
+  height: 70rpx;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+.commlist>view>text{
+  font-size: 14px;
+  color: #666;
+}
+.gengduo{
+  color: #FF6B00;
+  text-align: center;
+  margin: 10px 0px;
+}

@@ -1,0 +1,17 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="zzsearch">
+    <van-icon style="margin-left:40rpx" name="search" />
+    <input value="{{vlaue}}" class="search1" confirm-type="search" bindconfirm="bindconfirm" placeholder="输入研究领域"></input>
+
+  </view>
+  <view class="remen">
+    <text>热门搜索</text><view><text bindtap="replace">换一批 </text> <van-icon name="replay" /></view>
+  </view>
+  <view class="remen1">
+    <button bindtap="toindexInfo" data-item='{{item}}' wx:for="{{search}}" wx:key='i' wx:item="item" size='mini'>{{item}}</button>
+  </view>
+  <view>
+    <button class="share" open-type="share">分享给好友</button>
+  </view>
+</view>

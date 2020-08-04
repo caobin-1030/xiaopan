@@ -1,0 +1,29 @@
+var filter = {
+	numberSlice: function(value){
+		return value.toFixed(2)
+	},
+	numberSlice1: function(value){
+		return value.toFixed(0)
+	},
+	numberSlice2: function(value){
+		if(value.length>1){
+			var a =value.slice(-2)
+			return ((a[0].chinaCount/a[0].paperCount)*100).toFixed(2)+'%/'+((a[1].chinaCount/a[1].paperCount)*100).toFixed(2)+'%'
+		}else if(value.length==1){
+			var a =value.pop()
+			return ((a.chinaCount/a.paperCount)*100).toFixed(2)+'%'
+		}else {
+			return 'NA'
+		}
+	},
+	numberSlice3: function(list,value){
+		return list.split(",").indexOf(value.toString())
+	},
+}
+// 导出对外暴露的属性
+module.exports = {
+	numberSlice: filter.numberSlice,
+	numberSlice1: filter.numberSlice1,
+	numberSlice2: filter.numberSlice2,
+	numberSlice3: filter.numberSlice3
+}

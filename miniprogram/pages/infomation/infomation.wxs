@@ -1,0 +1,52 @@
+var filter = {
+	numberSlice: function(value){
+		return value.toFixed(2)
+	},
+	numberSlice1: function(value){
+		return value.toFixed(0)
+	},
+	numberSlice2: function(value){
+		if(value!=undefined){
+			if(value.length>1){
+				var a =value.slice(-2)
+				return (a[0].chinaCn*100).toFixed(2)+'%/'+(a[1].chinaCn*100).toFixed(2)+'%'
+			}else if(value.length==1){
+				var a =value.pop()
+				return (a.chinaCn*100).toFixed(2)+'%'
+			}else {
+				return 'NA'
+			}
+		}
+	},
+	numberSlice3: function(list,value){
+		if(list!=null && value!=undefined){
+			return list.split(",").indexOf(value.toString())
+		}else{
+			return '-1'
+		}
+	},
+	numberSlice4: function(value){
+		if(value){
+			if(value.length>0){
+				return true
+			}else{
+				return false
+			}
+		}
+		
+	},
+	numberSlice5: function(value){
+		if(value){
+			return value.length>150?value.slice(0,150):value
+		}
+	},
+}
+// 导出对外暴露的属性
+module.exports = {
+	numberSlice: filter.numberSlice,
+	numberSlice1: filter.numberSlice1,
+	numberSlice2: filter.numberSlice2,
+	numberSlice3: filter.numberSlice3,
+	numberSlice4: filter.numberSlice4,
+	numberSlice5: filter.numberSlice5
+}

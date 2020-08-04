@@ -1,0 +1,122 @@
+<!--index.wxml-->
+<wxs module="filter" src="./indexInfo.wxs"></wxs>
+<view class="container" style="height:{{height}}px">
+  <view class="screen {{scrollTop > 30 ? 'topnav' : ''}}" >
+    <view bindtap="cn"><text style="color:{{active1}}">CN%</text><van-icon style="color:{{sort=='cn_asc'?'#FF6B00':'#6C7B8A'}}" name="arrow-up"/><van-icon style="color:{{sort=='cn_desc'?'#FF6B00':'#6C7B8A'}}" name="arrow-down"/></view>
+    <view bindtap="if"><text style="color:{{active2}}">IF</text><van-icon style="color:{{sort=='if_asc'?'#FF6B00':'#6C7B8A'}}" name="arrow-up"/><van-icon style="color:{{sort=='if_desc'?'#FF6B00':'#6C7B8A'}}" name="arrow-down"/></view>
+    <view bindtap="review"><text style="color:{{active3}}">REVIEW</text><van-icon style="color:{{sort=='re_asc'?'#FF6B00':'#6C7B8A'}}" name="arrow-up"/><van-icon style="color:{{sort=='re_desc'?'#FF6B00':'#6C7B8A'}}" name="arrow-down"/></view>
+    <view bindtap="rate"><text style="color:{{active4}}">IF-RATE</text><van-icon style="color:{{sort=='ra_asc'?'#FF6B00':'#6C7B8A'}}" name="arrow-up"/><van-icon style="color:{{sort=='ra_desc'?'#FF6B00':'#6C7B8A'}}" name="arrow-down"/></view>
+    <text class="screen1" bindtap="saixuan">筛选</text>
+  </view>
+  <view wx:for="{{jcrList}}" wx:for-index="idx1" wx:for-item="pageItem" wx:key="idx1">
+    <view class="info" wx:for="{{pageItem}}" wx:for-index="idx" wx:for-item="item" wx:key="idx" data-jcr='{{item}}' >
+      <text class="infoTitle" bindtap="toInfomation" data-id='{{item.journalInfo.id}}'>{{item.journalInfo.title}}</text>
+      <view class="info1">
+        <view class="infoImg" bindtap="toInfomation" data-id='{{item.journalInfo.id}}'>
+          <image src="{{item.journalInfo.imgUrl!=null?item.journalInfo.imgUrl:'../../images/def.png'}}" style="width: 100%;height: 243rpx;" binderror='errimg' data-errorimg="{{idx}}" data-errorimg1="{{idx1}}"></image>
+        </view>
+        <view class="infoIn">
+          <view class="press">
+            <view bindtap="toInfomation" data-id='{{item.journalInfo.id}}'>{{item.journalInfo.country}}</view>
+            <view bindtap="gunazhu" class="{{gzList=='undefined' || filter.numberSlice3(gzList,item.journalInfo.id)=='-1'?'':'act'}}" data-id='{{item.journalInfo.id}}'>
+              {{gzList=='undefined' || filter.numberSlice3(gzList,item.journalInfo.id)=='-1'?gz:gz1}}
+            </view>
+          </view>
+          <view class="infoIn1" bindtap="toInfomation" data-id='{{item.journalInfo.id}}'>
+            <text style="margin-right:30rpx">出版周期：</text>
+            <text>{{item.journalInfo.cycle!=null?item.journalInfo.cycle:"NA"}}</text>
+          </view>
+          <view class="infoIn1" bindtap="toInfomation" data-id='{{item.journalInfo.id}}'>
+            <text style="margin-right:30rpx">国人占比：</text>
+            <text>{{filter.numberSlice2(item.list)}}</text>
+          </view>
+          <view class="ifjishi" bindtap="toInfomation" data-id='{{item.journalInfo.id}}'>
+            <view class="alertDialog">影响因子</view>
+            <view >
+              <view class="ifTop">
+                <view>
+                  <text style="color: #3366CC;">最新</text>
+                  <text style="color: #6C7B8A;">|</text>
+                  <text style="color: #6C7B8A;">即时</text>
+                </view>
+                <view>
+                  <text style="margin-right:15rpx">同比增长</text>
+                  <text style="font-size:20rpx">{{(item.jcrId!=null)?((item.jcrId.newIf==null && item.jcrId.oldIf==null)?"NA":filter.numberSlice1(item.jcrId.newIf/item.jcrId.oldIf*100)+"%"):"NA"}}</text>
+                </view>
+              </view>
+              <view class="ifBottom">
+                <text style="color: #3366CC;">{{(item.jcrId!=null)?((item.jcrId.newIf==null)?"NA":filter.numberSlice(item.jcrId.newIf)):"NA"}}</text>
+                <text style="color: #6C7B8A;">|</text>
+                <text style="color: #6C7B8A;">{{(item.jcrId!=null)?((item.jcrId.oldIf==null)?"NA":filter.numberSlice(item.jcrId.oldIf)):"NA"}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  
+  <view class='loadmore' style="text-align: center;" hidden='{{isShowLoadmore}}'>
+    <van-loading size="24px">加载中...</van-loading>
+  </view>
+  <view class="loadmore loadmore_line" hidden='{{!isShowNoDatasTips}}'>
+    <view class="loadmore_tips" style="text-align: center;">暂无数据</view>
+  </view>
+  <van-popup show="{{ show }}" position="right" custom-style="width: 70%;height:100%" bind:close="onClose">
+    <view class="shai">
+      <view class="ifzhi">
+        <view>影响因子</view>
+        <view class="buts">
+          <button data-ifid="all" class="{{_ifid=='all'?'active':''}}" bindtap="ifsClick">全部</button>
+          <button data-ifid="0-3" class="{{_ifid=='0-3'?'active':''}}" bindtap="ifsClick">0-3</button>
+          <button data-ifid="3-5" class="{{_ifid=='3-5'?'active':''}}" bindtap="ifsClick">3-5</button>
+          <button data-ifid="5-10" class="{{_ifid=='5-10'?'active':''}}" bindtap="ifsClick">5-10</button>
+          <button data-ifid="10-15" class="{{_ifid=='10-15'?'active':''}}" bindtap="ifsClick">10-15</button>
+          <button data-ifid=">15" class="{{_ifid=='>15'?'active':''}}" bindtap="ifsClick">{{'>'}}15</button>
+        </view>
+      </view>
+      <view class="ifzhi">
+        <view>中科院分区</view>
+        <view class="buts">
+          <button data-zhid="all" class="{{_zhid=='all'?'active':''}}" bindtap="zhClick">全部</button>
+          <button data-zhid="1" class="{{_zhid=='1'?'active':''}}" bindtap="zhClick">1区</button>
+          <button data-zhid="2" class="{{_zhid=='2'?'active':''}}" bindtap="zhClick">2区</button>
+          <button data-zhid="3" class="{{_zhid=='3'?'active':''}}" bindtap="zhClick">3区</button>
+          <button data-zhid="4" class="{{_zhid=='4'?'active':''}}" bindtap="zhClick">4区</button>
+        </view>
+      </view>
+      <view class="ifzhi">
+        <view>出版国家</view>
+        <view class="buts">
+          <button data-cbid="china" class="{{_cbid=='china'?'active':''}}" bindtap="cbClick">中国</button>
+          <button data-cbid="united states" class="{{_cbid=='united states'?'active':''}}" bindtap="cbClick">美国</button>
+          <button data-cbid="qt" class="{{_cbid=='qt'?'active':''}}" bindtap="cbClick">其他</button>
+        </view>
+      </view>
+      <view class="ifzhi">
+        <view>审稿速度</view>
+        <view class="buts">
+          <button data-sgid="<1" class="{{_sgid=='<1'?'active':''}}" bindtap="sgClick">{{"<"}}1月</button>
+          <button data-sgid="<2" class="{{_sgid=='<2'?'active':''}}" bindtap="sgClick">{{"<"}}2月</button>
+          <button data-sgid="<3" class="{{_sgid=='<3'?'active':''}}" bindtap="sgClick">{{"<"}}3月</button>
+          <button data-sgid="<4" class="{{_sgid=='<4'?'active':''}}" bindtap="sgClick">{{"<"}}4月</button>
+          <button data-sgid="<5" class="{{_sgid=='<5'?'active':''}}" bindtap="sgClick">{{"<"}}5月</button>
+          <button data-sgid=">5" class="{{_sgid=='>5'?'active':''}}" bindtap="sgClick">{{">"}}5月</button>
+        </view>
+      </view>
+      <view class="ifzhi">
+        <view>是否OA</view>
+        <view class="buts">
+          <button data-oaid="yes" class="{{_oaid=='yes'?'active':''}}" bindtap="oaClick">OA</button>
+          <button data-oaid="no" class="{{_oaid=='no'?'active':''}}" bindtap="oaClick">非OA</button>
+        </view>
+      </view>
+      <view class="footer1">
+        <button bindtap="czClick">重置</button>
+        <button bindtap="qdClick">确定</button>
+      </view>
+    </view>
+  </van-popup>
+</view>
+

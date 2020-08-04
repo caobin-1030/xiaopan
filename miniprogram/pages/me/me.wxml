@@ -1,0 +1,32 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="me">
+    <image class='headImage' src='{{userInfo.avatar}}' mode='scaleToFill'></image>
+    <view class="userinfo">
+      <view>{{userInfo.nikeName}}</view>
+      <view>{{userInfo.address}}</view>
+    </view>
+  </view>
+  <van-tabs active="{{ active }}" bind:change="onChange">
+    <van-tab title="我的关注">
+      <view class="my">
+        111
+      </view>
+    </van-tab>
+    <van-tab title="我的评论">
+      <view class="my">
+        11123
+      </view>
+    </van-tab>
+    <!-- <van-tab title="选刊记录">
+      <view class="my">
+        1113
+      </view>
+    </van-tab> -->
+    <van-tab title="系统通知">
+      <view class="my">
+        111
+      </view>
+    </van-tab>
+  </van-tabs>
+</view>

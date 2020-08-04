@@ -1,0 +1,109 @@
+<!--index.wxml-->
+<wxs module="filter" src="./infomation.wxs"></wxs>
+<view style="height:{{height}}px">
+  <view class="container">
+    <view class="info">
+      <text class="infoTitle">{{jcrList.journalInfo.title}}</text>
+      <view class="info1">
+        <view class="infoImg">
+          <image src="{{jcrList.journalInfo.imgUrl!=null?jcrList.journalInfo.imgUrl:'../../images/def.png'}}" style="width: 100%;height: 243rpx;" binderror='errimg'></image>
+        </view>
+        <view class="infoIn">
+          <view class="press">
+            <view>{{jcrList.journalInfo.country}}</view>
+            <view bindtap="gunazhu" class="{{gzList=='undefined' || filter.numberSlice3(gzList,jcrList.journalInfo.id)=='-1'?'':'act'}}" data-id='{{jcrList.journalInfo.id}}'>
+              {{gzList=='undefined' || filter.numberSlice3(gzList,jcrList.journalInfo.id)=='-1'?gz:gz1}}
+            </view>
+          </view>
+          <view class="infoIn1">
+            <text style="margin-right:30rpx">出版周期：</text>
+            <text>{{jcrList.journalInfo.cycle!=null?jcrList.journalInfo.cycle:"NA"}}</text>
+          </view>
+          <view class="infoIn1">
+            <text style="margin-right:30rpx">国人占比：</text>
+            <text>{{filter.numberSlice2(jcrList.list)}}</text>
+          </view>
+          <view class="ifjishi">
+            <view class="alertDialog">影响因子</view>
+            <view >
+              <view class="ifTop">
+                <view>
+                  <text style="color: #3366CC;">最新</text>
+                  <text style="color: #6C7B8A;">|</text>
+                  <text style="color: #6C7B8A;">即时</text>
+                </view>
+                <view>
+                  <text style="margin-right:15rpx">同比增长</text>
+                  <text style="font-size:20rpx">{{(jcrList.jcrId!=null)?((jcrList.jcrId.newIf==null && jcrList.jcrId.oldIf==null)?"NA":filter.numberSlice1(jcrList.jcrId.newIf/jcrList.jcrId.oldIf*100)+"%"):"NA"}}</text>
+                </view>
+              </view>
+              <view class="ifBottom">
+                <text style="color: #3366CC;">{{(jcrList.jcrId!=null)?((jcrList.jcrId.newIf==null)?"NA":filter.numberSlice(jcrList.jcrId.newIf)):"NA"}}</text>
+                <text style="color: #6C7B8A;">|</text>
+                <text style="color: #6C7B8A;">{{(jcrList.jcrId!=null)?((jcrList.jcrId.oldIf==null)?"NA":filter.numberSlice(jcrList.jcrId.oldIf)):"NA"}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="fenqu">
+      <text>分区：{{jcrList.zky[0].areaValue}}</text>
+      <text>自引率：{{jcrList.zyl}}</text>
+      <text>H-index：{{jcrList.hindex}}</text>
+    </view>
+  </view>
+  <view style="background:#fff">
+    <view class="container1" style="height: 406rpx;width: 90%;margin:20rpx 5%;">
+      <ec-canvas id="mychart-dom-line" canvas-id="mychart-line" force-use-old-canvas="true" ec="{{ ec }}"></ec-canvas>
+    </view>
+  </view>
+  <view style="background:#fff">
+    <view class="artide" style="height: 406rpx;width: 90%;margin:20rpx 5%;">
+      <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" force-use-old-canvas="true" ec="{{ ec1 }}"></ec-canvas>
+    </view>
+  </view>
+  <view style="background:#fff">
+    <view class="introduce">
+      <view>杂志介绍</view>
+      <text wx:if="{{more1}}">{{filter.numberSlice5(jcrList.journalInfo.scope)}}</text>
+      <text wx:if="{{!more1}}">{{jcrList.journalInfo.scope}}</text>
+      <view bindtap="more" wx:if="{{more1}}" class="gengduo">加载更多</view>
+    </view>
+  </view>
+  <view class="fuzhi">
+    <button bindtap="fuzhi" data-fu="1" hover-class="button-hover">投稿说明</button>
+    <button bindtap="fuzhi" data-fu="1" hover-class="button-hover">投稿地址</button>
+    <button bindtap="fuzhi" data-fu="1" hover-class="button-hover">联系方式</button>
+  </view>
+  <view class="neirong">点击按钮复制内容详情</view>
+  <view class="comment1">
+    <view>评论</view>
+    <view wx:if="{{!filter.numberSlice4(comm)}}" style="text-align: center;">暂无评论</view>
+    <view wx:else>
+      <view wx:for="{{comm}}" wx:for-index="idx" wx:for-item="commItem" wx:key="idx">
+        <view class="commlist">
+          <image src="{{commItem.urlImg}}"></image>
+          <view >
+            <text>{{commItem.nickname}}</text>
+            <view>{{commItem.comment}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+  </view>
+  <view class="comment">
+    <button bindtap="comment">我要评论</button>
+  </view>
+  <van-popup show="{{ show }}" closeable close-icon-position="top-right" position="bottom" custom-style="height: 20%" bind:close="onClose">
+    <view class="commtext">
+      <text>{{jcrList.journalInfo.title}}</text>
+      <textarea value="{{message}}" bindinput="inputeidt" placeholder-class="holder" placeholder="说点什么吧..." auto-focus>
+      </textarea>
+      <view>
+        <van-button color="#3366cc" bindtap="submit"  data-id='{{jcrList.journalInfo.id}}' size="mini">提交</van-button>
+      </view>
+    </view>
+  </van-popup>
+</view>
