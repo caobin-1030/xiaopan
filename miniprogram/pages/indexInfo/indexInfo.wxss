@@ -34,7 +34,6 @@ page {
   height: 50rpx;
   line-height: 50rpx;
   z-index: 100;
-
 }
 .screen>view {
   font-family: SourceHanSansCN;
@@ -113,12 +112,12 @@ page {
 .infoTitle {
   font-family: SourceHanSansCN;
   font-size: 30rpx;
-  line-height: 30rpx;
+  line-height: 25rpx;
   color: #101010;
-  text-overflow: ellipsis;overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow:ellipsis;
+  display: block;
 }
 .info1 {
   display: flex;
@@ -148,12 +147,16 @@ page {
 .act {
   background: #FF6B00 !important;
 }
-.press>view:nth-child(2) {
+.press>button:nth-child(2) {
   background: #6C7B8A;
   border-radius: 8rpx 0px 0px 8rpx;
   color: #fff;
   margin-right: -20rpx;
-  padding: 5rpx 10rpx;
+  padding: 0 10rpx;
+  width: auto !important;
+  height: 23px !important;
+  line-height: 23px !important;
+  font-size: 26rpx !important;
 }
 .infoIn1>text {
   font-family: SourceHanSansCN;

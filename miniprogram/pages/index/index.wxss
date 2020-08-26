@@ -14,7 +14,7 @@ page {
   margin:0 auto;
 }
 .zzsearch {
-  margin-top: 60rpx;
+  margin-top: 120rpx;
   display: flex;
   flex-direction: row;
   background: #FFFFFF;
@@ -39,7 +39,8 @@ page {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top:40rpx;
+  margin-top:80rpx;
+  margin-bottom:40rpx;
   color: #6C7B8A;
   height: 42rpx;
   line-height: 42rpx;
@@ -64,4 +65,5 @@ page {
 .share {
   background: none;
   font-weight: 500;
+  margin-top: 40rpx;
 }

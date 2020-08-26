@@ -28,29 +28,82 @@ Page({
     
   },
   gunazhu:function (e) {
-    
-    var a=this.data.gzList.split(",")
-    if(a.indexOf(e.target.dataset.id.toString())==-1){
-      var data={jcrId:e.target.dataset.id,openId:wx.getStorageSync('userInfo').openId,isCollect:1}
-      a.push(e.target.dataset.id.toString())
-      this.setData({
-        gzList:a.toString()
+    if(wx.getStorageSync('userInfo')!=''){
+      var a=this.data.gzList.split(",")
+      if(a.indexOf(e.target.dataset.id.toString())==-1){
+        var data={jcrId:e.target.dataset.id,openId:wx.getStorageSync('userInfo').openId,isCollect:1}
+        a.push(e.target.dataset.id.toString())
+        this.setData({
+          gzList:a.toString()
+        })
+        wx.showToast({
+          title: '关注成功',
+        });
+      }else{
+        var b=a.indexOf(e.target.dataset.id.toString())
+        var data={jcrId:e.target.dataset.id,openId:wx.getStorageSync('userInfo').openId,isCollect:0}
+        a.splice(b,1)
+        this.setData({
+          gzList:a.toString()
+        })
+        wx.showToast({
+          title: '已取消关注',
+        });
+      }
+      var url= app.globalData.URL + 'putJcrComment';
+      app.wxRequest('POST',url,data,(res) => {
       })
     }else{
-      var b=a.indexOf(e.target.dataset.id.toString())
-      var data={jcrId:e.target.dataset.id,openId:wx.getStorageSync('userInfo').openId,isCollect:0}
-      a.splice(b,1)
-      this.setData({
-        gzList:a.toString()
+      var that = this;
+      wx.login({
+        success: res => {
+          // 获取到用户的 code 之后：res.code
+          var data={data:JSON.stringify(e.detail),code:res.code}
+          wx.setStorageSync('detail', JSON.stringify(e.detail))
+          var url= app.globalData.URL + 'login';
+          app.wxRequest('POST',url,data,(res) => {
+            wx.setStorageSync('userInfo', res.data)
+            var a=this.data.gzList.split(",")
+            if(a.indexOf(e.target.dataset.id.toString())==-1){
+              var data={jcrId:e.target.dataset.id,openId:wx.getStorageSync('userInfo').openId,isCollect:1}
+              a.push(e.target.dataset.id.toString())
+              this.setData({
+                gzList:a.toString()
+              })
+              wx.showToast({
+                title: '关注成功',
+              });
+            }else{
+              var b=a.indexOf(e.target.dataset.id.toString())
+              var data={jcrId:e.target.dataset.id,openId:wx.getStorageSync('userInfo').openId,isCollect:0}
+              a.splice(b,1)
+              this.setData({
+                gzList:a.toString()
+              })
+              wx.showToast({
+                title: '已取消关注',
+              });
+            }
+            var url= app.globalData.URL + 'putJcrComment';
+            app.wxRequest('POST',url,data,(res) => {
+            })
+            var data={openId:wx.getStorageSync('userInfo').openId}
+            var url= app.globalData.URL + 'getJcrComment';
+            app.wxRequest('POST',url,data,(res) => {
+              this.setData({
+                gzList:res.data.toString()
+              })
+            })
+          }, (err) => {
+          })
+        }
       })
     }
-    var url= app.globalData.URL + 'putJcrComment';
-    app.wxRequest('POST',url,data,(res) => {
-    })
+    
   },
   reviewpage:function(){
     var data={title:this.data.searchInfo,sort:this.data.sort,page:this.data.page,ifsFilter:this.data._ifid,areaFilter:this.data._zhid,country:this.data._cbid,review:this.data._sgid,oa:this.data._oaid}
-    var url= app.globalData.URL + '/searchJcr';
+    var url= app.globalData.URL + 'searchJcr';
     app.wxRequest('POST',url,data,(res) => {
       var page1=this.data.page-1
       this.setData({
@@ -195,7 +248,7 @@ Page({
   },
   czClick:function(){
     this.setData({
-      _cbid:'',_oaid:'',_ifid:'',_sgid:'',_zhid:'',show:false,jcrList:[[]],page:1,u:0,i:0,o:0,p:0,active1:'',active2:'',active3:'',active4:''
+      _cbid:'',_oaid:'',_ifid:'',_sgid:'',_zhid:'',show:false,jcrList:[[]],page:1,u:0,i:0,o:0,p:0,active1:'',active2:'',active3:'',active4:'',sort:''
     })
     this.reviewpage()
   },
@@ -206,7 +259,7 @@ Page({
   },
   qdClick:function(){
     this.setData({
-      show:false,jcrList:[[]],page:1,u:0,i:0,o:0,p:0,active1:'',active2:'',active3:'',active4:''
+      show:false,jcrList:[[]],page:1,u:0,i:0,o:0,p:0,active1:'',active2:'',active3:'',active4:'',sort:''
     })
     this.reviewpage()
   },

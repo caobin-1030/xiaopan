@@ -42,6 +42,74 @@ page {
   background-color: #6C7B8A !important; 
 }
 .my{
+  width: 100%;
+  
+  overflow: hidden;
+  overflow-y:scroll;
+}
+.my1{
   width: 90%;
   margin: 0 auto;
+}
+.mylist{
+  display: flex;
+  width: 90%;
+  flex-direction: row;
+  background-color: #fff;
+  margin: 20rpx;
+  padding: 15rpx;
+  border-radius: 10rpx;
+}
+.mylist>image{
+  width: 90rpx;
+  height: 90rpx;
+  margin-right: 20rpx;
+}
+.mylist>view>text:nth-child(1){
+  display: block;
+  line-height: 45rpx;
+  margin-bottom: 10rpx;
+}
+.mylist>view>text:nth-child(2){
+  line-height: 30rpx;
+  color: #999;
+  font-size: 10px;
+}
+.pllist{
+  background-color: #fff;
+  margin: 20rpx;
+  padding: 15rpx;
+  border-radius: 10rpx;
+}
+.pllist>view:nth-child(1){
+  line-height: 30rpx;
+  font-size: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow:ellipsis;
+  display: block;
+}
+.pllist>view:nth-child(2){
+  font-size: 10px;
+  line-height: 30rpx;
+  color: #999;
+}
+.login{
+  overflow: hidden;
+  width: 100%;
+  padding-top:25rpx;
+  background-color: #fff;
+}
+.login>button{
+  width: 100rpx!important;
+  height: 100rpx!important;
+  line-height: 100rpx!important;
+  border-radius: 50%;
+  background: #eee;
+  color: #999;
+  margin:0 auto;
+  text-align: center;
+  margin-bottom: 20rpx;
+  padding: 0;
+  font-weight: 500;
 }

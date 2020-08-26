@@ -19,11 +19,27 @@ var filter = {
 	numberSlice3: function(list,value){
 		return list.split(",").indexOf(value.toString())
 	},
+	numberSlice6: function(value){
+		value=value.toFixed(2)
+		if(isNaN(value)){
+			return '#333';
+		}else{
+			if(value>=1){
+				return '#FF6B00';
+			}else if(0<value<1.001){
+				return '#09BB07';
+			}else {
+				return '#333';
+			}
+		}
+		
+	},
 }
 // 导出对外暴露的属性
 module.exports = {
 	numberSlice: filter.numberSlice,
 	numberSlice1: filter.numberSlice1,
 	numberSlice2: filter.numberSlice2,
-	numberSlice3: filter.numberSlice3
+	numberSlice3: filter.numberSlice3,
+	numberSlice6: filter.numberSlice6
 }

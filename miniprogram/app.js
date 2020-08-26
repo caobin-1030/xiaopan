@@ -16,7 +16,7 @@ App({
     }
   },
   globalData:{
-    URL: 'http://218.108.153.254:8888/',
+    URL: 'https://sci-hub.work/',
     jcrList:null
   },
  

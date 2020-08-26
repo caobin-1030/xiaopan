@@ -40,6 +40,21 @@ var filter = {
 			return value.length>150?value.slice(0,150):value
 		}
 	},
+	numberSlice6: function(value){
+		value=value.toFixed(2)
+		if(isNaN(value)){
+			return '#333';
+		}else{
+			if(value>=1){
+				return '#FF6B00';
+			}else if(0<value<1.001){
+				return '#09BB07';
+			}else {
+				return '#333';
+			}
+		}
+		
+	},
 }
 // 导出对外暴露的属性
 module.exports = {
@@ -48,5 +63,6 @@ module.exports = {
 	numberSlice2: filter.numberSlice2,
 	numberSlice3: filter.numberSlice3,
 	numberSlice4: filter.numberSlice4,
-	numberSlice5: filter.numberSlice5
+	numberSlice5: filter.numberSlice5,
+	numberSlice6: filter.numberSlice6
 }

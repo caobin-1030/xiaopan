@@ -1,22 +1,52 @@
 <!--index.wxml-->
 <view class="container">
-  <view class="me">
+  <view class="me" wx:if="{{userInfo!=''}}">
     <image class='headImage' src='{{userInfo.avatar}}' mode='scaleToFill'></image>
     <view class="userinfo">
       <view>{{userInfo.nikeName}}</view>
       <view>{{userInfo.address}}</view>
     </view>
   </view>
+  <view class="login" wx:if="{{userInfo==''}}">
+    <button bindgetuserinfo="bindGetUserInfo" open-type="getUserInfo">登录</button>
+  </view>
   <van-tabs active="{{ active }}" bind:change="onChange">
     <van-tab title="我的关注">
-      <view class="my">
-        111
+      <scroll-view scroll-y bindscrolltolower="bindscrollfxGZ" class="my" style="height:{{height}}px">
+        <view class="my1" wx:for="{{commList}}" wx:for-index="idx" wx:for-item="item" wx:key="idx">
+          <view class="mylist" wx:for="{{item}}" wx:for-index="idx1" wx:for-item="item1" wx:key="idx1" bindtap="toinfomation" data-id="{{item1.jcrId.jcrId}}">
+            <image src="{{item1.journalInfo.logoImg!=null?'http://img.sangerbox.com/'+item1.journalInfo.logoImg:'../../images/def.png'}}"></image>
+            <view>
+              <text>{{item1.journalInfo.title}}</text>
+              <text>影响因子：{{item1.jcrId.newIf}}/{{item1.jcrId.oldIf}}</text>
+            </view>
+          </view>
+        </view>
+        <view class="loadmore loadmore_line" hidden='{{!isShowNoDatasTipsGZ}}'>
+          <view class="loadmore_tips" style="text-align: center;">暂无数据</view>
+        </view>
+      </scroll-view>
+      <view class='loadmore' style="text-align: center;" hidden='{{isShowLoadmoreGZ}}'>
+        <van-loading size="24px">加载中...</van-loading>
       </view>
+      
     </van-tab>
     <van-tab title="我的评论">
-      <view class="my">
-        11123
+      <scroll-view scroll-y bindscroll="bindscrollfxPL" class="my" style="height:{{height}}px">
+        <view class="my1" wx:for="{{plList}}" wx:for-index="idx" wx:for-item="item" wx:key="idx">
+          <view class="pllist" wx:for="{{item}}" wx:for-index="idx1" wx:for-item="item1" wx:key="idx1" bindtap="toinfomation" data-id="{{item1.jcrId}}">
+            <view>{{item1.content}}</view>
+            <view>评论时间：{{item1.createTime}}</view>
+          </view>
+        </view>
+        <view class="loadmore loadmore_line" hidden='{{!isShowNoDatasTipsPL}}'>
+          <view class="loadmore_tips" style="text-align: center;">暂无数据</view>
+        </view>
+      </scroll-view>
+      <view class='loadmore' style="text-align: center;" hidden='{{isShowLoadmorePL}}'>
+        <van-loading size="24px">加载中...</van-loading>
       </view>
+      
     </van-tab>
     <!-- <van-tab title="选刊记录">
       <view class="my">
@@ -25,7 +55,9 @@
     </van-tab> -->
     <van-tab title="系统通知">
       <view class="my">
-        111
+      <view class="loadmore loadmore_line">
+        <view class="loadmore_tips" style="text-align: center;">暂无数据</view>
+      </view>
       </view>
     </van-tab>
   </van-tabs>

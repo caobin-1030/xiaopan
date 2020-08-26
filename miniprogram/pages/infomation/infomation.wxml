@@ -1,19 +1,19 @@
 <!--index.wxml-->
 <wxs module="filter" src="./infomation.wxs"></wxs>
-<view style="height:{{height}}px">
+<view style="height:{{height}}px;position: relative;" >
   <view class="container">
     <view class="info">
       <text class="infoTitle">{{jcrList.journalInfo.title}}</text>
       <view class="info1">
         <view class="infoImg">
-          <image src="{{jcrList.journalInfo.imgUrl!=null?jcrList.journalInfo.imgUrl:'../../images/def.png'}}" style="width: 100%;height: 243rpx;" binderror='errimg'></image>
+          <image src="{{jcrList.journalInfo.logoImg!=null?'http://img.sangerbox.com/'+jcrList.journalInfo.logoImg:'../../images/def.png'}}" style="width: 100%;height: 243rpx;" binderror='errimg'></image>
         </view>
         <view class="infoIn">
           <view class="press">
             <view>{{jcrList.journalInfo.country}}</view>
-            <view bindtap="gunazhu" class="{{gzList=='undefined' || filter.numberSlice3(gzList,jcrList.journalInfo.id)=='-1'?'':'act'}}" data-id='{{jcrList.journalInfo.id}}'>
+            <button bindgetuserinfo="gunazhu" open-type="getUserInfo" class="{{gzList=='undefined' || filter.numberSlice3(gzList,jcrList.journalInfo.id)=='-1'?'':'act'}}" data-id='{{jcrList.journalInfo.id}}'>
               {{gzList=='undefined' || filter.numberSlice3(gzList,jcrList.journalInfo.id)=='-1'?gz:gz1}}
-            </view>
+            </button>
           </view>
           <view class="infoIn1">
             <text style="margin-right:30rpx">出版周期：</text>
@@ -32,15 +32,15 @@
                   <text style="color: #6C7B8A;">|</text>
                   <text style="color: #6C7B8A;">即时</text>
                 </view>
-                <view>
+                <view style="color:{{filter.numberSlice6(jcrList.jcrId.newIf/jcrList.jcrId.oldIf)}};border-color:{{filter.numberSlice6(jcrList.jcrId.newIf/jcrList.jcrId.oldIf)}}">
                   <text style="margin-right:15rpx">同比增长</text>
                   <text style="font-size:20rpx">{{(jcrList.jcrId!=null)?((jcrList.jcrId.newIf==null && jcrList.jcrId.oldIf==null)?"NA":filter.numberSlice1(jcrList.jcrId.newIf/jcrList.jcrId.oldIf*100)+"%"):"NA"}}</text>
                 </view>
               </view>
               <view class="ifBottom">
-                <text style="color: #3366CC;">{{(jcrList.jcrId!=null)?((jcrList.jcrId.newIf==null)?"NA":filter.numberSlice(jcrList.jcrId.newIf)):"NA"}}</text>
+                <text style="color: #6C7B8A;">{{(jcrList.ifs!=null)?((jcrList.ifs[0].year2019==null)?jcrList.ifs[0].year2018:filter.numberSlice(jcrList.ifs[0].year2019)):"NA"}}</text>
                 <text style="color: #6C7B8A;">|</text>
-                <text style="color: #6C7B8A;">{{(jcrList.jcrId!=null)?((jcrList.jcrId.oldIf==null)?"NA":filter.numberSlice(jcrList.jcrId.oldIf)):"NA"}}</text>
+                <text style="color: #3366CC;">{{(jcrList.jcrId!=null)?((jcrList.jcrId.newIf==null)?"NA":filter.numberSlice(jcrList.jcrId.newIf)):"NA"}}</text>
               </view>
             </view>
           </view>
@@ -55,12 +55,12 @@
   </view>
   <view style="background:#fff">
     <view class="container1" style="height: 406rpx;width: 90%;margin:20rpx 5%;">
-      <ec-canvas id="mychart-dom-line" canvas-id="mychart-line" force-use-old-canvas="true" ec="{{ ec }}"></ec-canvas>
+      <ec-canvas wx:if="{{!show}}" id="mychart-dom-line" canvas-id="mychart-line" force-use-old-canvas="true" ec="{{ ec }}"></ec-canvas>
     </view>
   </view>
   <view style="background:#fff">
     <view class="artide" style="height: 406rpx;width: 90%;margin:20rpx 5%;">
-      <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" force-use-old-canvas="true" ec="{{ ec1 }}"></ec-canvas>
+      <ec-canvas wx:if="{{!show}}" id="mychart-dom-bar" canvas-id="mychart-bar" force-use-old-canvas="true" ec="{{ ec1 }}"></ec-canvas>
     </view>
   </view>
   <view style="background:#fff">
@@ -82,28 +82,34 @@
     <view wx:if="{{!filter.numberSlice4(comm)}}" style="text-align: center;">暂无评论</view>
     <view wx:else>
       <view wx:for="{{comm}}" wx:for-index="idx" wx:for-item="commItem" wx:key="idx">
-        <view class="commlist">
-          <image src="{{commItem.urlImg}}"></image>
-          <view >
-            <text>{{commItem.nickname}}</text>
-            <view>{{commItem.comment}}</view>
+        <view wx:for="{{commItem}}" wx:for-index="idx1" wx:for-item="item" wx:key="idx1">
+          <view class="commlist">
+            <image src="{{item.urlImg}}"></image>
+            <view >
+              <text>{{item.nickname}}</text>
+              <view>{{item.comment}}</view>
+            </view>
           </view>
         </view>
       </view>
+      
     </view>
     
   </view>
-  <view class="comment">
-    <button bindtap="comment">我要评论</button>
+  <view class="comment" wx:if="{{!show}}">
+    <button bindgetuserinfo="comment" open-type="getUserInfo" class="comm111">我要评论</button>
   </view>
-  <van-popup show="{{ show }}" closeable close-icon-position="top-right" position="bottom" custom-style="height: 20%" bind:close="onClose">
+  
+  <van-popup show="{{ show }}" closeable close-icon-position="top-right" position="bottom" custom-style="height: 250px" bind:close="onClose">
     <view class="commtext">
       <text>{{jcrList.journalInfo.title}}</text>
-      <textarea value="{{message}}" bindinput="inputeidt" placeholder-class="holder" placeholder="说点什么吧..." auto-focus>
+      <textarea value="{{message}}" bindinput="inputeidt" placeholder-class="holder" placeholder="说点什么吧...">
       </textarea>
       <view>
         <van-button color="#3366cc" bindtap="submit"  data-id='{{jcrList.journalInfo.id}}' size="mini">提交</van-button>
       </view>
     </view>
   </van-popup>
+  
+  
 </view>

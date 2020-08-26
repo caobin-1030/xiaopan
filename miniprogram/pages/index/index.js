@@ -6,6 +6,17 @@ Page({
     value:'',search1:['nature','NC','Molecular Cancer','oncogene','journal of medical virology'],search2:['Science Advances','gyt','lancet','blood','protein cell'],search3:['NEJM','JAMA','Autophagy','immunity'],search:null,i:1
   },
   onLoad:function (params) {
+    wx.getSetting({
+      success: function(res) {
+        if (res.authSetting['scope.userInfo']) {
+          
+        } else {
+          // 用户没有授权
+          // 改变 isHide 的值，显示授权页面
+          wx.clearStorage()
+        }
+      }
+    });
     this.setData({
       search:this.data.search1
     })

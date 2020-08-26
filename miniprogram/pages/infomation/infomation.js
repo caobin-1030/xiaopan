@@ -164,7 +164,7 @@ Page({
     ec1: {
       onInit: initChart1
     },jcrList:null,gz:'关注',gz1:'已关注',gzList:null,
-    show: false,message:'',comm:null,jcrid:'',more1:false
+    show: false,message:'',comm:[],jcrid:'',more1:false,page:1,isShowLoadmore:false,isShowNoDatasTips:false,endloading: false
   },
   onLoad:function (option){
     wx.showShareMenu({
@@ -182,7 +182,7 @@ Page({
       width:wx.getSystemInfoSync().windowWidth,
       jcrid:option.id
     })
-    var url1= app.globalData.URL + '/searchInfo';
+    var url1= app.globalData.URL + 'searchInfo';
     app.wxRequest('post',url1,{jcrid:option.id},(res) => {
       app.globalData.jcrList=res.data
       if(res.data.journalInfo.scope.length>150){
@@ -206,31 +206,99 @@ Page({
   },
   getpinglun:function () {
     var url2= app.globalData.URL + 'getPingLun';
-    app.wxRequest('POST',url2,{jcrId:this.data.jcrid},(res) => {
+    app.wxRequest('POST',url2,{jcrId:this.data.jcrid,pageNo:this.data.page},(res) => {
+      var page1=this.data.page-1
       this.setData({
-        comm:res.data
+        ['comm[' + page1 + ']' ]: res.data,
+        page:this.data.page+1
       })
+      if(this.data.page*20>=res.msg){
+        this.setData({
+          isShowLoadmore:true,isShowNoDatasTips:true,endloading: true,
+        })
+      }
     })  
   },
+  onReachBottom: function () {
+    var that = this;
+    var endloading = that.data.endloading
+    if (!endloading){
+      that.getpinglun()  //页面上拉调用这个方法
+    }
+  },
   gunazhu:function (e) {
-    var a=this.data.gzList.split(",")
-    if(a.indexOf(e.target.dataset.id.toString())==-1){
-      var data={jcrId:e.target.dataset.id,openId:wx.getStorageSync('userInfo').openId,isCollect:1}
-      a.push(e.target.dataset.id.toString())
-      this.setData({
-        gzList:a.toString()
+    if(wx.getStorageSync('userInfo')!=''){
+      var a=this.data.gzList.split(",")
+      if(a.indexOf(e.target.dataset.id.toString())==-1){
+        var data={jcrId:e.target.dataset.id,openId:wx.getStorageSync('userInfo').openId,isCollect:1}
+        a.push(e.target.dataset.id.toString())
+        this.setData({
+          gzList:a.toString()
+        })
+        wx.showToast({
+          title: '关注成功',
+        });
+      }else{
+        var b=a.indexOf(e.target.dataset.id.toString())
+        var data={jcrId:e.target.dataset.id,openId:wx.getStorageSync('userInfo').openId,isCollect:0}
+        a.splice(b,1)
+        this.setData({
+          gzList:a.toString()
+        })
+        wx.showToast({
+          title: '已取消关注',
+        });
+      }
+      var url= app.globalData.URL + 'putJcrComment';
+      app.wxRequest('POST',url,data,(res) => {
       })
     }else{
-      var b=a.indexOf(e.target.dataset.id.toString())
-      var data={jcrId:e.target.dataset.id,openId:wx.getStorageSync('userInfo').openId,isCollect:0}
-      a.splice(b,1)
-      this.setData({
-        gzList:a.toString()
+      var that = this;
+      wx.login({
+        success: res => {
+          // 获取到用户的 code 之后：res.code
+          var data={data:JSON.stringify(e.detail),code:res.code}
+          wx.setStorageSync('detail', JSON.stringify(e.detail))
+          var url= app.globalData.URL + 'login';
+          app.wxRequest('POST',url,data,(res) => {
+            wx.setStorageSync('userInfo', res.data)
+            var a=this.data.gzList.split(",")
+            if(a.indexOf(e.target.dataset.id.toString())==-1){
+              var data={jcrId:e.target.dataset.id,openId:wx.getStorageSync('userInfo').openId,isCollect:1}
+              a.push(e.target.dataset.id.toString())
+              this.setData({
+                gzList:a.toString()
+              })
+              wx.showToast({
+                title: '关注成功',
+              });
+            }else{
+              var b=a.indexOf(e.target.dataset.id.toString())
+              var data={jcrId:e.target.dataset.id,openId:wx.getStorageSync('userInfo').openId,isCollect:0}
+              a.splice(b,1)
+              this.setData({
+                gzList:a.toString()
+              })
+              wx.showToast({
+                title: '已取消关注',
+              });
+            }
+            var url= app.globalData.URL + 'putJcrComment';
+            app.wxRequest('POST',url,data,(res) => {
+            })
+            var data={openId:wx.getStorageSync('userInfo').openId}
+            var url= app.globalData.URL + 'getJcrComment';
+            app.wxRequest('POST',url,data,(res) => {
+              this.setData({
+                gzList:res.data.toString()
+              })
+            })
+          }, (err) => {
+          })
+        }
       })
     }
-    var url= app.globalData.URL + 'putJcrComment';
-    app.wxRequest('POST',url,data,(res) => {
-    })
+    
   },
   errimg:function (e) {
     var jcrList=this.data.jcrList
@@ -280,12 +348,38 @@ Page({
         });
     }
   },
-  comment:function (event) {
-    
-    this.setData({ 
-      show: true ,
-      message:''
-    })
+  comment:function (e) {
+    if(wx.getStorageSync('userInfo')!=''){
+      this.setData({ 
+        show: true ,
+        message:''
+      })
+    }else{
+      var that = this;
+      wx.login({
+        success: res => {
+          // 获取到用户的 code 之后：res.code
+          var data={data:JSON.stringify(e.detail),code:res.code}
+          wx.setStorageSync('detail', JSON.stringify(e.detail))
+          var url= app.globalData.URL + 'login';
+          app.wxRequest('POST',url,data,(res) => {
+            wx.setStorageSync('userInfo', res.data)
+            this.setData({ 
+              show: true ,
+              message:''
+            })
+            var data={openId:wx.getStorageSync('userInfo').openId}
+            var url= app.globalData.URL + 'getJcrComment';
+            app.wxRequest('POST',url,data,(res) => {
+              this.setData({
+                gzList:res.data.toString()
+              })
+            })
+          }, (err) => {
+          })
+        }
+      })
+    }
   },
   submit:function(e){
     if(this.data.message!=""){

@@ -1,6 +1,5 @@
 {
   "pages": [
-    "pages/login/login",
     "pages/index/index",
     "pages/infomation/infomation",
     "pages/me/me",
@@ -9,7 +8,7 @@
   ],
   "tabBar": {
     "color": "#999999",
-    "selectColor": "#3ade28",
+    "selectedColor": "#3366cc",
     "list": [
       {
         "pagePath": "pages/index/index",

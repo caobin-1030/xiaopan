@@ -64,12 +64,12 @@ page {
 .infoTitle {
   font-family: SourceHanSansCN;
   font-size: 30rpx;
-  line-height: 30rpx;
+  line-height: 25rpx;
   color: #101010;
-  text-overflow: ellipsis;overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow:ellipsis;
+  display: block;
 }
 .info1 {
   display: flex;
@@ -100,12 +100,16 @@ page {
 .act {
   background: #FF6B00 !important;
 }
-.press>view:nth-child(2) {
+.press>button:nth-child(2) {
   background: #6C7B8A;
   border-radius: 8rpx 0px 0px 8rpx;
   color: #fff;
   margin-right: -20rpx;
-  padding: 5rpx 10rpx;
+  padding: 0 10rpx;
+  width: auto !important;
+  height: 23px !important;
+  line-height: 23px !important;
+  font-size: 26rpx !important;
 }
 .infoIn1>text {
   font-family: SourceHanSansCN;
@@ -221,7 +225,7 @@ ec-canvas {
   font-size: 14px;
   text-align: center;
   padding: 10rpx 0;
-  border: 1rpx solid #3366CC;
+  border: 1px solid #3366CC;
   cursor: pointer;
 }
 .fuzhi>.button-hover {
@@ -243,11 +247,12 @@ ec-canvas {
   bottom: 0;
   left:0;
   background-color: #fff;
+  z-index: 99;
 }
-.comment>button:not([size='mini']) {
+.comm111 {
   width: 70%;
   border-radius: 10rpx;
-  min-height: 60rpx;
+  height: 60rpx!important;
   margin:10rpx auto;
   color: #3366CC;
   font-weight: 500;
@@ -255,12 +260,8 @@ ec-canvas {
   font-size: 14px;
   text-align: center;
   padding: 10rpx 0;
-  border: 1rpx solid #3366CC;
+  border: 1px solid #3366CC;
   cursor: pointer;
-}
-.comment>.button-hover {
-  color: #fff;
-  background-color: #3366CC;
 }
 .commtext{
   width: 90%;
@@ -268,30 +269,36 @@ ec-canvas {
 }
 .commtext>textarea{
   width: 95%;
-  height: 70px;
+  height: 150px;
   font-size: 14px;
   color: #666;
   border:1px solid #999;
   border-radius: 10rpx;
   padding: 8px;
+  margin-top: 10px;
 }
 .commtext>text:nth-child(1){
   line-height: 24px;
-  font-size: 16px;
-
+  font-size: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow:ellipsis;
+  display: block;
+  margin-top: 10px;
 }
 .van-popup__close-icon--top-right {
-  top:6px !important;
-  top: var(--popup-close-icon-margin,6px) !important;
-  right: 10px !important;
-  right: var(--popup-close-icon-margin,10px) !important;
+  top:12px !important;
+  top: var(--popup-close-icon-margin,12px) !important;
+  right: 15px !important;
+  right: var(--popup-close-icon-margin,15px) !important;
 }
 .commtext>view>van-button>button:not([size='mini']) {
-  width: 50px !important;
+  width: 80px !important;
   border-radius: 10rpx !important;
-  min-height: 22px !important;
+  min-height: 30px !important;
+  line-height: 30px !important;
   margin:10rpx auto !important;
-  font-size: 14px;
+  font-size: 16px;
   
 }
 .comment1>view:nth-child(1) {
