@@ -16,7 +16,7 @@ App({
     }
   },
   globalData:{
-    URL: 'https://sci-hub.work/',
+    URL: 'https://sci-hub.life/',
     jcrList:null
   },
  
@@ -40,9 +40,6 @@ App({
       dataType: 'json',
       success: function (res) {
         callback(res.data);
-      },
-      fail: function (err) {
-        errFun(err);
       }
     })
   }

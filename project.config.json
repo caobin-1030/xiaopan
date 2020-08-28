@@ -2,7 +2,7 @@
 	"miniprogramRoot": "miniprogram/",
 	"cloudfunctionRoot": "cloudfunctions/",
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": true,
 		"enhance": true,
 		"postcss": true,
@@ -30,7 +30,7 @@
 	},
 	"appid": "wx19a2b8e370df0d65",
 	"projectname": "xiaopan",
-	"libVersion": "2.12.0",
+	"libVersion": "2.12.1",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"condition": {
